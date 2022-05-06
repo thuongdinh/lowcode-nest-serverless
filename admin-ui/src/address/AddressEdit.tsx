@@ -11,6 +11,7 @@ import {
 } from "react-admin";
 
 import { CustomerTitle } from "../customer/CustomerTitle";
+import { UserTitle } from "../user/UserTitle";
 
 export const AddressEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -28,6 +29,14 @@ export const AddressEdit = (props: EditProps): React.ReactElement => {
           <SelectArrayInput optionText={CustomerTitle} />
         </ReferenceArrayInput>
         <TextInput label="State" source="state" />
+        <ReferenceArrayInput
+          source="users"
+          reference="User"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={UserTitle} />
+        </ReferenceArrayInput>
         <NumberInput step={1} label="Zip" source="zip" />
       </SimpleForm>
     </Edit>

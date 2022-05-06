@@ -1,4 +1,8 @@
+import { AddressWhereUniqueInput } from "../address/AddressWhereUniqueInput";
+
 export type UserUpdateInput = {
+  address?: AddressWhereUniqueInput | null;
+  balance?: number | null;
   firstName?: string | null;
   lastName?: string | null;
   password?: string;

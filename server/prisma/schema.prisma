@@ -5,10 +5,12 @@ datasource postgres {
 
 generator client {
   provider = "prisma-client-js"
-  binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 model User {
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId String?
+  balance   Float?
   createdAt DateTime @default(now())
   firstName String?
   id        String   @id @default(cuid())
@@ -54,6 +56,7 @@ model Address {
   id        String     @id @default(cuid())
   state     String?
   updatedAt DateTime   @updatedAt
+  users     User[]
   zip       Int?
 }
 

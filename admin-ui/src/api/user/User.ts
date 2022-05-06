@@ -1,4 +1,8 @@
+import { Address } from "../address/Address";
+
 export type User = {
+  address?: Address | null;
+  balance: number | null;
   createdAt: Date;
   firstName: string | null;
   id: string;
