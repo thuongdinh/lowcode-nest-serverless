@@ -1,0 +1,19 @@
+{
+  "dataServiceGeneratorVersion": "0.12.6",
+  "appInfo": {
+    "name": "Lowcode Nest Serverless",
+    "description": "Sample application for e-commerce",
+    "version": "tinei70x",
+    "id": "cl2tw24qj113195001s6xh8bxndn",
+    "url": "https://app.amplication.com/cl2tw24qj113195001s6xh8bxndn",
+    "settings": {
+      "dbHost": "localhost",
+      "dbName": "",
+      "dbPassword": "admin",
+      "dbPort": 5432,
+      "dbUser": "admin",
+      "appId": "cl2tw24qj113195001s6xh8bxndn",
+      "authProvider": "Jwt"
+    }
+  }
+}
