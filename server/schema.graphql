@@ -11,6 +11,7 @@ type Address {
   id: String!
   state: String
   updatedAt: DateTime!
+  users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
   zip: Float
 }
 
@@ -20,6 +21,7 @@ input AddressCreateInput {
   city: String
   customers: CustomerCreateNestedManyWithoutAddressesInput
   state: String
+  users: UserCreateNestedManyWithoutAddressesInput
   zip: Float
 }
 
@@ -40,6 +42,7 @@ input AddressUpdateInput {
   city: String
   customers: CustomerUpdateManyWithoutAddressesInput
   state: String
+  users: UserUpdateManyWithoutAddressesInput
   zip: Float
 }
 
@@ -50,6 +53,7 @@ input AddressWhereInput {
   customers: CustomerListRelationFilter
   id: StringFilter
   state: StringNullableFilter
+  users: UserListRelationFilter
   zip: IntNullableFilter
 }
 
@@ -365,6 +369,8 @@ input StringNullableFilter {
 }
 
 type User {
+  address: Address
+  balance: Float
   createdAt: DateTime!
   firstName: String
   id: String!
@@ -375,11 +381,17 @@ type User {
 }
 
 input UserCreateInput {
+  address: AddressWhereUniqueInput
+  balance: Float
   firstName: String
   lastName: String
   password: String!
   roles: [String!]!
   username: String!
+}
+
+input UserCreateNestedManyWithoutAddressesInput {
+  connect: [UserWhereUniqueInput!]
 }
 
 type UserInfo {
@@ -388,7 +400,15 @@ type UserInfo {
   username: String!
 }
 
+input UserListRelationFilter {
+  every: UserWhereInput
+  none: UserWhereInput
+  some: UserWhereInput
+}
+
 input UserOrderByInput {
+  addressId: SortOrder
+  balance: SortOrder
   createdAt: SortOrder
   firstName: SortOrder
   id: SortOrder
@@ -400,6 +420,8 @@ input UserOrderByInput {
 }
 
 input UserUpdateInput {
+  address: AddressWhereUniqueInput
+  balance: Float
   firstName: String
   lastName: String
   password: String
@@ -407,7 +429,15 @@ input UserUpdateInput {
   username: String
 }
 
+input UserUpdateManyWithoutAddressesInput {
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+}
+
 input UserWhereInput {
+  address: AddressWhereUniqueInput
+  balance: FloatNullableFilter
   firstName: StringNullableFilter
   id: StringFilter
   lastName: StringNullableFilter
