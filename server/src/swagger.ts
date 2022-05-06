@@ -1,6 +1,6 @@
 import { DocumentBuilder } from "@nestjs/swagger";
 
-export const swaggerPath = "api";
+export const swaggerPath = "v1";
 
 export const swaggerDocumentOptions = new DocumentBuilder()
   .setTitle("Lowcode Nest Serverless")

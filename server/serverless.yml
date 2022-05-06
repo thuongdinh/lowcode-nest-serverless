@@ -1,0 +1,47 @@
+org: thuongdinh
+app: lowcode-nest-serverless
+service: core-api
+
+plugins:
+  - serverless-offline
+  - serverless-prune-plugin
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: 'ap-southeast-1'
+  stage: 'dev'
+  environment:
+    POSTGRESQL_USER: ${env:POSTGRESQL_USER}
+    POSTGRESQL_PASSWORD: ${env:POSTGRESQL_PASSWORD}
+    POSTGRESQL_PORT: ${env:POSTGRESQL_PORT}
+    POSTGRESQL_URL: ${env:POSTGRESQL_URL}
+    BCRYPT_SALT: ${env:BCRYPT_SALT}
+    COMPOSE_PROJECT_NAME: ${env:COMPOSE_PROJECT_NAME}
+    JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    JWT_EXPIRATION: ${env:JWT_EXPIRATION}
+    ENABLE_SWAGGER: ${env:ENABLE_SWAGGER}
+
+package:
+  exclude:
+    - node_modules/prisma/**
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+  prune:
+    automatic: true
+    number: 1
+
+functions:
+  api:
+    handler: ./dist/lambda.handler
+    events:
+      - http:
+          cors: true
+          method: any
+          path: /{any+}
+      - http:
+          cors: true
+          method: any
+          path: /
