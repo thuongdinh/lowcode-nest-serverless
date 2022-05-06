@@ -27,6 +27,7 @@ import { DeleteUserArgs } from "./DeleteUserArgs";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
+import { Address } from "../../address/base/Address";
 import { UserService } from "../user.service";
 
 @graphql.Resolver(() => User)
@@ -93,7 +94,15 @@ export class UserResolverBase {
     // @ts-ignore
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        address: args.data.address
+          ? {
+              connect: args.data.address,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -112,7 +121,15 @@ export class UserResolverBase {
       // @ts-ignore
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          address: args.data.address
+            ? {
+                connect: args.data.address,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -142,5 +159,21 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Address, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Address",
+    action: "read",
+    possession: "any",
+  })
+  async address(@graphql.Parent() parent: User): Promise<Address | null> {
+    const result = await this.service.getAddress(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

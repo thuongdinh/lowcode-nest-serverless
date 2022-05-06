@@ -1,4 +1,5 @@
 import { Customer } from "../customer/Customer";
+import { User } from "../user/User";
 
 export type Address = {
   address_1: string | null;
@@ -9,5 +10,6 @@ export type Address = {
   id: string;
   state: string | null;
   updatedAt: Date;
+  users?: Array<User>;
   zip: number | null;
 };
